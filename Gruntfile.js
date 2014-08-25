@@ -5,33 +5,28 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON("package.json"),
 
         clean: {
-            demo: ["demo/lib"]
+            demo: ["demo/lib"],
+            dist: ["dist"]
         },
 
         copy: {
-            source:{
-
-                expand: true,
-                cwd: "source/js",
-                src: [
-                        "**/*.js",
-                    ],
-                dest: "demo/lib/js"
-            }
+            source: { expand: true, cwd: "source/js", src: ["**/*.js"], dest: "demo/lib/js" }
         },
-
+        concat: {
+            options: { separator: ";" },
+            dist: { src: ["source/js/hydrogen*.js"], dest: "dist/hydrogen.min.js" },
+        },
         less: {
             source: {
-                options: {
-                    // Compression configuration (spaces removed, comments removed,...)
-                    compress: true,
-                    yuicompress: true,
-                    optimization: 2
-                },
+                options: { compress: true, yuicompress: true, optimization: 2 },
                 files: {
                     // Take the file hydrogen.less and compile it into hydrogen.min.css
                     "demo/lib/css/hydrogen.min.css": "source/styles/hydrogen.less"
                 }
+            },
+            dist: {
+                options: { compress: true, yuicompress: true, optimization: 2 },
+                files: { "dist/hydrogen.min.css": "source/styles/hydrogen.less" }
             }
         },
         jshint: {
@@ -83,6 +78,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-contrib-watch");
+    grunt.loadNpmTasks("grunt-contrib-concat");
 
     grunt.initConfig(config);
 
@@ -93,6 +89,13 @@ module.exports = function(grunt) {
         "less:source",
         "http-server:dev",
         "watch:source"
+    ]);
+
+    grunt.registerTask("distrib", [
+        "jshint",
+        "clean:dist",
+        "concat:dist",
+        "less:dist"
     ]);
 
 };
