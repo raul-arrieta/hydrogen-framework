@@ -47,6 +47,15 @@ module.exports = function(grunt) {
                 }
             }
         },
+        watch: {
+            source: {
+                files: ["source/**/*.*"],
+                tasks: ["jshint", "clean:demo", "copy:source", "less:source"],
+                options: {
+                    spawn: false,
+                },
+            },
+        },
         "http-server": {
             dev: {
 
@@ -63,7 +72,7 @@ module.exports = function(grunt) {
                 defaultExt: "html",
 
                 // run in parallel with other tasks
-                runInBackground: false
+                runInBackground: true
             }
         }
     };
@@ -73,6 +82,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-less");
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-contrib-jshint");
+    grunt.loadNpmTasks("grunt-contrib-watch");
 
     grunt.initConfig(config);
 
@@ -81,7 +91,8 @@ module.exports = function(grunt) {
         "clean:demo",
         "copy:source",
         "less:source",
-        "http-server:dev"
+        "http-server:dev",
+        "watch:source"
     ]);
 
 };
