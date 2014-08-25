@@ -13,6 +13,7 @@
     "undef": true,
     "unused": true,
     "node": true,
+    "debug": true,
 
     "predef": ["it", "before", "after", "describe", "$"]
 }

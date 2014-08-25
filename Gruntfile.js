@@ -10,7 +10,8 @@ module.exports = function(grunt) {
         },
 
         copy: {
-            source: { expand: true, cwd: "source/js", src: ["**/*.js"], dest: "demo/lib/js" }
+            source: { expand: true, cwd: "source/js", src: ["**/*.js"], dest: "demo/lib/js" },
+            components: { expand: true, cwd: "bower_components/jquery/dist", src: ["*.min.js"], dest: "demo/lib/js" }
         },
         concat: {
             options: { separator: ";" },
@@ -45,7 +46,7 @@ module.exports = function(grunt) {
         watch: {
             source: {
                 files: ["source/**/*.*"],
-                tasks: ["jshint", "clean:demo", "copy:source", "less:source"],
+                tasks: ["jshint", "clean:demo", "copy:source", "copy:components", "less:source"],
                 options: {
                     spawn: false,
                 },
@@ -61,7 +62,7 @@ module.exports = function(grunt) {
 
                 host: "127.0.0.1",
 
-                cache: 0,
+                cache: false,
                 showDir : true,
                 autoIndex: true,
                 defaultExt: "html",
@@ -86,6 +87,7 @@ module.exports = function(grunt) {
         "jshint",
         "clean:demo",
         "copy:source",
+        "copy:components",
         "less:source",
         "http-server:dev",
         "watch:source"

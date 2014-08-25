@@ -1,0 +1,22 @@
+{
+  "name": "hydrogen-framework",
+  "version": "0.0.1",
+  "homepage": "https://github.com/jmescuderojustel/hydrogen-framework",
+  "authors": [
+    "Jesus Maria Escudero <jm.escudero.justel@gmail.com>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1"
+  }
+}

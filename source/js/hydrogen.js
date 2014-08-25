@@ -1,6 +1,19 @@
 var hydrogen = (function(){
 
     var init = function(){
+
+        $("a[data-control='link']").each(function(index, item){
+
+
+
+            $(item).bind("click", function(){
+                debugger;
+                hydrogen.routes.navigateTo($(item).attr("data-url"));
+
+            });
+
+        });
+
     };
 
 
@@ -10,4 +23,6 @@ var hydrogen = (function(){
 
 })();
 
-hydrogen.init();
+$(function(){
+    hydrogen.init();
+});

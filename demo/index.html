@@ -1,10 +1,26 @@
 <html>
     <head>
         <title>Example for developing Hydrogen Framework</title>
+
+        <script type="application/javascript" src="lib/js/jquery.min.js"></script>
+
+        <script type="application/javascript" src="lib/js/hydrogen.js"></script>
+        <script type="application/javascript" src="lib/js/hydrogen.routes.js"></script>
+        <script type="application/javascript" src="app/app.js"></script>
+
     </head>
     <body>
 
-        <h1>Main page</h1>
+        <ul>
+            <li>
+                <a href="#" data-control="link" data-url="/">Home</a>
+            </li>
+            <li>
+                <a href="#" data-control="link" data-url="/users">Users</a>
+            </li>
+        </ul>
+
+        <div data-control="container" id="content"></div>
 
     </body>
 </html>
