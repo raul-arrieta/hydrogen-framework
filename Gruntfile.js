@@ -11,7 +11,8 @@ module.exports = function(grunt) {
 
         copy: {
             source: { expand: true, cwd: "source/js", src: ["**/*.js"], dest: "demo/lib/js" },
-            components: { expand: true, cwd: "bower_components/jquery/dist", src: ["*.min.js"], dest: "demo/lib/js" }
+            jquery: { expand: true, cwd: "bower_components/jquery/dist", src: ["*.min.js"], dest: "demo/lib/js" },
+            mustache: { expand: true, cwd: "bower_components/mustache", src: ["*.js"], dest: "demo/lib/js" }
         },
         concat: {
             options: { separator: ";" },
@@ -46,7 +47,7 @@ module.exports = function(grunt) {
         watch: {
             source: {
                 files: ["source/**/*.*"],
-                tasks: ["jshint", "clean:demo", "copy:source", "copy:components", "less:source"],
+                tasks: ["jshint", "clean:demo", "copy:source", "copy:jquery", "copy:mustache", "less:source"],
                 options: {
                     spawn: false,
                 },
@@ -87,7 +88,8 @@ module.exports = function(grunt) {
         "jshint",
         "clean:demo",
         "copy:source",
-        "copy:components",
+        "copy:jquery",
+        "copy:mustache",
         "less:source",
         "http-server:dev",
         "watch:source"

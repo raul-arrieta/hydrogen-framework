@@ -29,6 +29,12 @@ hydrogen.routes = (function(){
 
         }
 
+        if(configuration.data){
+
+            newRoute.data = configuration.data;
+
+        }
+
         routeTable.push(newRoute);
     };
 
@@ -40,14 +46,25 @@ hydrogen.routes = (function(){
 
                 if(routeTable[routeCounter].container){
 
-                    $("#" + routeTable[routeCounter].container).load(this.templateBasePath + routeTable[routeCounter].template + this.templateExtension);
+                    var templateUrl = this.templateBasePath + routeTable[routeCounter].template + this.templateExtension,
+                        $container = $("#" + routeTable[routeCounter].container),
+                        dataSource = routeTable[routeCounter].data;
 
+                    if(routeTable[routeCounter].data){
+
+                        hydrogen.data.proccessDataWithTemplate(dataSource, templateUrl, $container);
+
+                    }
+                    else{
+
+                        $("#" + routeTable[routeCounter].container).load(templateUrl);
+
+                    }
                 }
 
+                break;
             }
-
         }
-
     };
 
     return {
