@@ -33,6 +33,7 @@ Framework for mobile applications based on HTML, easy and with basic functionall
     
 Go to folder and run:
     
+    bower install
     npm install
     
 ## Run it
