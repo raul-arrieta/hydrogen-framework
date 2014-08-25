@@ -3,7 +3,8 @@ hydrogen.routes = (function () {
 
     "use strict";
 
-    var routeTable = [],
+    var
+        routeTable = [],
 
         templateBasePath = "",
 

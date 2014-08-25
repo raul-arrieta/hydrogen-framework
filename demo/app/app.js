@@ -10,6 +10,8 @@ var app = (function(){
         hydrogen.routes.add({url: "/about", template: "about", container: "content"});
 
         hydrogen.routes.navigateTo(defaultUrl);
+
+        hydrogen.forms.on("#btnSubmit", "click", "frmNewUser", function(){alert("OK");}, function(){alert("Error");}, {shouldValidate: true});
     };
 
 
