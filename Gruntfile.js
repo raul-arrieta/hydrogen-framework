@@ -8,7 +8,18 @@ module.exports = function(grunt) {
             demo: ["demo/lib"],
             dist: ["dist"]
         },
-
+        yuidoc: {
+            compile: {
+                name: "<%= pkg.name %>",
+                description: "<%= pkg.description %>",
+                version: "<%= pkg.version %>",
+                url: "<%= pkg.homepage %>",
+                options: {
+                    paths: "source/",
+                    outdir: "documentation/"
+                }
+            }
+        },
         copy: {
             source: { expand: true, cwd: "source/js", src: ["**/*.js"], dest: "demo/lib/js" },
             jquery: { expand: true, cwd: "bower_components/jquery/dist", src: ["*.min.js"], dest: "demo/lib/js" },
@@ -81,6 +92,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-contrib-concat");
+    grunt.loadNpmTasks("grunt-contrib-yuidoc");
 
     grunt.initConfig(config);
 
@@ -99,7 +111,8 @@ module.exports = function(grunt) {
         "jshint",
         "clean:dist",
         "concat:dist",
-        "less:dist"
+        "less:dist",
+        "yuidoc"
     ]);
 
 };
