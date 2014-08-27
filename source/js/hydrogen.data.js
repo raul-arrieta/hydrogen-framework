@@ -13,8 +13,7 @@ hydrogen.data = (function () {
                 $.ajax({ url: template }).
                     done(function (templateHtml) {
 
-                        var dataTemplated = Mustache.render(templateHtml, data);
-                        $container.html(dataTemplated);
+                        merge(templateHtml, data, $container);
 
                     });
             });
@@ -29,8 +28,7 @@ hydrogen.data = (function () {
                     $.ajax({ url: template }).
                         done(function (templateHtml) {
 
-                            var dataTemplated = Mustache.render(templateHtml, data);
-                            $container.html(dataTemplated);
+                            merge(templateHtml, data, $container);
 
                         });
                 });
@@ -41,11 +39,17 @@ hydrogen.data = (function () {
             $.ajax({ url: template }).
                 done(function (templateHtml) {
 
-                    var dataTemplated = Mustache.render(templateHtml, dataConfiguration);
-                    $container.html(dataTemplated);
+                    merge(templateHtml, dataConfiguration, $container);
 
                 });
         }
+    },
+
+    merge = function(template, data, $container){
+
+        var dataTemplated = Mustache.render(template, data);
+        $container.html(dataTemplated);
+
     };
 
     return {

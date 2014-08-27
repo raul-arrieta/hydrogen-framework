@@ -37,6 +37,12 @@ hydrogen.routes = (function () {
          */
         templateExtension = ".html",
 
+        beforeNavigationCallback,
+
+        afterNavigationCallback,
+
+        history = [],
+
         /**
          * Adds a routing configuration to the routeTable
          *
@@ -68,6 +74,32 @@ hydrogen.routes = (function () {
         },
 
         /**
+         * Configures a function to be runned every request, after navigation
+         *
+         * @method after
+         * @param {Function} function to be called just after the routing is done
+         * @chainable
+         */
+        after = function(callback){
+
+            afterNavigationCallback = callback;
+            return this;
+        },
+
+        /**
+         * Configures a function to be runned every request, before any navigation
+         *
+         * @method before
+         * @param {Function} function to be called just before the routing is done
+         * @chainable
+         */
+        before = function(callback){
+
+            beforeNavigationCallback = callback;
+            return this;
+        },
+
+        /**
          * Redirects the aplication to a new route, as configured in the routeTable
          *
          * @method navigateTo
@@ -75,6 +107,8 @@ hydrogen.routes = (function () {
          * @chainable
          */
         navigateTo = function (url) {
+
+            beforeNavigationCallback();
 
             var routeCounter = 0, routeLength = routeTable.length;
 
@@ -103,9 +137,14 @@ hydrogen.routes = (function () {
 
                     }
 
+                    // Navigation succeded: store change in history
+                    history.push(url);
+
                     break;
                 }
             }
+
+            afterNavigationCallback();
 
             return this;
         },
@@ -144,6 +183,10 @@ hydrogen.routes = (function () {
          * @chainable
          */
         navigateTo: navigateTo,
+
+        before: before,
+
+        after: after,
 
         templateBasePath: templateBasePath,
 

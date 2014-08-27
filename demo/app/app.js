@@ -5,15 +5,37 @@ var app = (function(){
         hydrogen.routes.templateBasePath = "templates/";
         hydrogen.routes.templateExtension = ".html";
 
-        hydrogen.routes.add({
+        hydrogen.routes.
+
+        before(function(){
+
+            $("#content, #otherContent").empty();
+            console.log("Navigation started");
+        }).
+
+        after(function(){
+
+            console.log("Navigation done");
+
+        }).
+
+        add({
             url: "/",
             update: [{template: "home", container: "content"}]
-        }).add({
+        }).
+
+        add({
             url: "/users",
             update: [{template: "users", container: "content", data: app.dataProvider.getUsers}]
-        }).add({
+        }).
+
+        add({
             url: "/about",
-            update: [{template: "about", container: "content"}]
+            update: [
+                {template: "about", container: "content"},
+                {template: "about", container: "otherContent"}
+
+            ]
         });
         hydrogen.routes.navigateTo(defaultUrl);
 
