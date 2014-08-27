@@ -23,6 +23,8 @@ var hydrogen = (function(){
 
         });
 
+        hydrogen.styles.applyStyles();
+
     };
 
 

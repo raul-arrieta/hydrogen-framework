@@ -31,7 +31,7 @@ hydrogen.styles = (function () {
 
                 if(shouldApplyCSSFramework === "Bootstrap"){
 
-
+                    hydrogen.styles.bootstrap.applyStyles();
 
                 }
 

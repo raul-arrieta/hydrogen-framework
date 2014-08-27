@@ -23,11 +23,11 @@ var app = (function(){
 
                 if(hydrogen.routes.current() === "/users"){
 
-                    $("#liUsers").css({background: "#FF0F0F"});
+                    console.log("Users!!!");
 
                 }else{
 
-                    $("#liUsers").css({background: "#FFF"});
+                    console.log("Not users!!!");
                 }
 
             }).
