@@ -7,47 +7,48 @@ var app = (function(){
 
         hydrogen.routes.
 
-        before(function(){
+            before(function(){
 
-            $("#content, #otherContent").empty();
-            console.log("Navigation started");
-        }).
+                $("#content, #otherContent").empty();
+                console.log("Navigation started");
+            }).
 
-        after(function(){
+            after(function(){
 
-            console.log("Navigation done");
+                console.log("Navigation done");
 
-            console.log("I am at " + hydrogen.routes.current());
+                console.log("I am at " + hydrogen.routes.current());
 
-            if(hydrogen.routes.current() === "/users"){
+                if(hydrogen.routes.current() === "/users"){
 
-                $("#liUsers").css({background: "#FF0F0F"});
+                    $("#liUsers").css({background: "#FF0F0F"});
 
-            }else{
+                }else{
 
-                $("#liUsers").css({background: "#FFF"});
-            }
+                    $("#liUsers").css({background: "#FFF"});
+                }
 
-        }).
+            }).
 
-        add({
-            url: "/",
-            update: [{template: "home", container: "content"}]
-        }).
+            add({
+                url: "/",
+                update: [{template: "home", container: "content"}]
+            }).
 
-        add({
-            url: "/users",
-            update: [{template: "users", container: "content", data: app.dataProvider.getUsers}]
-        }).
+            add({
+                url: "/users",
+                update: [{template: "users", container: "content", data: app.dataProvider.getUsers}]
+            }).
 
-        add({
-            url: "/about",
-            update: [
-                {template: "about", container: "content"},
-                {template: "about", container: "otherContent"}
+            add({
+                url: "/about",
+                update: [
+                    {template: "about", container: "content"},
+                    {template: "about", container: "otherContent"}
 
-            ]
-        });
+                ]
+            });
+
         hydrogen.routes.navigateTo(defaultUrl);
 
         hydrogen.forms.on("#btnSubmit", "click", "frmNewUser", function(){alert("OK");}, function(){alert("Error");}, {shouldValidate: true});
