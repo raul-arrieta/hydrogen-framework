@@ -2,6 +2,8 @@ var app = (function(){
 
     var init = function(defaultUrl){
 
+        hydrogen.styles.setCSSFramework("Bootstrap");
+
         hydrogen.routes.templateBasePath = "templates/";
         hydrogen.routes.templateExtension = ".html";
 
