@@ -42,7 +42,12 @@ hydrogen.data = (function () {
     merge = function(template, data, $container){
 
         var dataTemplated = Mustache.render(template, data);
-        $container.html(dataTemplated);
+
+        // Surround the template with DIV to allow methods to find thing inside
+        var $styledTemplate = hydrogen.styles.applyStyles($("<div>" + dataTemplated + "</div>"));
+
+        // "Html" method will not return the newly added DIV
+        $container.html($styledTemplate.html());
 
     };
 

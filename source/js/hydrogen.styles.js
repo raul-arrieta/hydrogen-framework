@@ -25,18 +25,19 @@ hydrogen.styles = (function () {
 
         },
 
-        applyStyles = function(){
+        applyStyles = function($context){
 
             if(shouldApplyCSSFramework){
 
                 if(shouldApplyCSSFramework === "Bootstrap"){
 
-                    hydrogen.styles.bootstrap.applyStyles();
+                    hydrogen.styles.bootstrap.applyStyles($context);
 
                 }
 
             }
 
+            return $context;
         };
 
 

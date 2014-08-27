@@ -19,9 +19,11 @@ hydrogen.styles.bootstrap = (function () {
 
         },
 
-        _applyStylesToTopMenu = function(){
+        _applyStylesToTopMenu = function($context){
 
-            var $menuContainer = $("div[data-control='top-menu']"),
+            $context = $context || $("body");
+
+            var $menuContainer = $("div[data-control='top-menu']", $context),
 
                 $menuItemsContainer = $("ul", $menuContainer).first(),
 
@@ -48,12 +50,25 @@ hydrogen.styles.bootstrap = (function () {
 
         },
 
-        applyStyles = function(){
+        _applyStylesToTables = function($context){
+
+            $context = $context || $("body");
+
+            var $tables = $("table[data-control='table']", $context);
+
+            $tables.addClass("table table-bordered table-striped table-hover");
+
+        },
+
+        applyStyles = function($context){
 
             _applyStylesToTopBody();
 
-            _applyStylesToTopMenu();
+            _applyStylesToTopMenu($context);
 
+            _applyStylesToTables($context);
+
+            return $context;
         };
 
 
