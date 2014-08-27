@@ -120,6 +120,27 @@ hydrogen.routes = (function () {
         },
 
         /**
+         * Navigates back to the previous URL
+         *
+         * @method back
+         * @chainable
+         */
+        back = function(){
+
+            var that = this;
+
+            // At least 2 URL are required: current and previous
+            if(history.length > 1){
+
+                console.log("back to " + history[history.length - 2]);
+                that.navigateTo(history[history.length - 2]);
+
+            }
+
+            return this;
+        },
+
+        /**
          * Redirects the aplication to a new route, as configured in the routeTable
          *
          * @method navigateTo
@@ -208,6 +229,8 @@ hydrogen.routes = (function () {
         before: before,
 
         after: after,
+
+        back: back,
 
         current: current,
 
