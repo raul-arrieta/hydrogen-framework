@@ -46,6 +46,8 @@ hydrogen.routes = (function () {
          */
         add = function (configuration) {
 
+            configuration = configuration || {};
+
             var newRoute = {};
 
             if (configuration.url) {
@@ -54,21 +56,9 @@ hydrogen.routes = (function () {
 
             }
 
-            if (configuration.container) {
+            if (configuration.update) {
 
-                newRoute.container = configuration.container;
-
-            }
-
-            if (configuration.template) {
-
-                newRoute.template = configuration.template;
-
-            }
-
-            if (configuration.data) {
-
-                newRoute.data = configuration.data;
+                newRoute.update = configuration.update;
 
             }
 
@@ -86,26 +76,31 @@ hydrogen.routes = (function () {
          */
         navigateTo = function (url) {
 
-            for (var routeCounter = 0, length = routeTable.length; routeCounter < length; routeCounter++){
+            var routeCounter = 0, routeLength = routeTable.length;
 
-                if(routeTable[routeCounter].url === url){
+            for ( ; routeCounter < routeLength; routeCounter++){
 
-                    if(routeTable[routeCounter].container){
+                var route = routeTable[routeCounter];
 
-                        var templateUrl = this.templateBasePath + routeTable[routeCounter].template + this.templateExtension,
-                            $container = $("#" + routeTable[routeCounter].container),
-                            dataSource = routeTable[routeCounter].data;
+                if(route.url === url){
 
-                        if(routeTable[routeCounter].data){
+                    if(Array.isArray(route.update)){
 
-                            hydrogen.data.proccessDataWithTemplate(dataSource, templateUrl, $container);
+                        var updateAreaCounter = 0, updateAreaLength = route.update.length;
 
-                        }
-                        else{
+                        // We have diferent areas to update
+                        for( ; updateAreaCounter< updateAreaLength; updateAreaCounter++){
 
-                            $("#" + routeTable[routeCounter].container).load(templateUrl);
+                            _updateArea(this, route.update[updateAreaCounter]);
 
                         }
+
+                    }
+                    else if(route.update){
+
+                        // We have just one area to update
+                        _updateArea(this, route.update);
+
                     }
 
                     break;
@@ -113,6 +108,28 @@ hydrogen.routes = (function () {
             }
 
             return this;
+        },
+
+        _updateArea = function (context, updateConfiguration){
+
+            if(updateConfiguration.container){
+
+                var templateUrl = context.templateBasePath + updateConfiguration.template + context.templateExtension,
+                    $container = $("#" + updateConfiguration.container),
+                    dataSource = updateConfiguration.data;
+
+                if(dataSource){
+
+                    hydrogen.data.load(dataSource, templateUrl, $container);
+
+                }
+                else{
+
+                    $container.load(templateUrl);
+
+                }
+            }
+
         };
 
     return {

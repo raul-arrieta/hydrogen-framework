@@ -3,7 +3,7 @@ hydrogen.data = (function () {
 
     "use strict";
 
-    var proccessDataWithTemplate = function (dataConfiguration, template, $container) {
+    var load = function (dataConfiguration, template, $container) {
 
         if (typeof (dataConfiguration) === "function") {
 
@@ -45,15 +45,12 @@ hydrogen.data = (function () {
                     $container.html(dataTemplated);
 
                 });
-
-
         }
-
     };
 
     return {
 
-        proccessDataWithTemplate: proccessDataWithTemplate
+        load: load
 
     };
 
