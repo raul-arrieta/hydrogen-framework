@@ -10,39 +10,33 @@ hydrogen.data = (function () {
             // We need to run the funciton for getting data
             dataConfiguration(function (data) {
 
-                $.ajax({ url: template }).
-                    done(function (templateHtml) {
+                loadAndMerge(template, data, $container);
 
-                        merge(templateHtml, data, $container);
-
-                    });
             });
 
         } else if (typeof (dataConfiguration) === "string") {
 
             // It is a path. We should get data from that URL path and merge it with the template
-
             $.ajax({ url: dataConfiguration }).
                 done(function (data) {
 
-                    $.ajax({ url: template }).
-                        done(function (templateHtml) {
+                    loadAndMerge(template, data, $container);
 
-                            merge(templateHtml, data, $container);
-
-                        });
                 });
 
         } else {
             // It is an Array, so we already have data
-
-            $.ajax({ url: template }).
-                done(function (templateHtml) {
-
-                    merge(templateHtml, dataConfiguration, $container);
-
-                });
+            loadAndMerge(template, dataConfiguration, $container);
         }
+    },
+
+    loadAndMerge = function(templateUrl, data, $container){
+
+        $.ajax({ url: templateUrl }).
+            done(function (templateHtml) {
+                merge(templateHtml, data, $container);
+            });
+
     },
 
     merge = function(template, data, $container){
