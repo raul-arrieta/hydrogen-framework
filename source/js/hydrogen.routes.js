@@ -133,7 +133,7 @@ hydrogen.routes = (function () {
             if(history.length > 1){
 
                 console.log("back to " + history[history.length - 2]);
-                that.navigateTo(history[history.length - 2]);
+                that.navigateTo(history[history.length - 2], true);
 
             }
 
@@ -147,11 +147,17 @@ hydrogen.routes = (function () {
          * @param {String} url Url to navigate to, as defined in the routeTable
          * @chainable
          */
-        navigateTo = function (url) {
+        navigateTo = function (url, isGoingBack) {
 
             history = history || [];
 
-            history.push(url);
+            if(!isGoingBack){
+                history.push(url);
+            }else{
+                // If we are going back, we remove the current URL from the hsitory, so user can go
+                // back to the previous one
+                history.splice(history.length - 1, 1);
+            }
 
             beforeNavigationCallback();
 
