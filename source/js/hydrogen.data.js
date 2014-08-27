@@ -5,28 +5,37 @@ hydrogen.data = (function () {
 
     var load = function (dataConfiguration, template, $container) {
 
-        if (typeof (dataConfiguration) === "function") {
+        if(dataConfiguration){
 
-            // We need to run the funciton for getting data
-            dataConfiguration(function (data) {
+            if (typeof (dataConfiguration) === "function") {
 
-                loadAndMerge(template, data, $container);
-
-            });
-
-        } else if (typeof (dataConfiguration) === "string") {
-
-            // It is a path. We should get data from that URL path and merge it with the template
-            $.ajax({ url: dataConfiguration }).
-                done(function (data) {
+                // We need to run the funciton for getting data
+                dataConfiguration(function (data) {
 
                     loadAndMerge(template, data, $container);
 
                 });
 
-        } else {
-            // It is an Array, so we already have data
-            loadAndMerge(template, dataConfiguration, $container);
+            } else if (typeof (dataConfiguration) === "string") {
+
+                // It is a path. We should get data from that URL path and merge it with the template
+                $.ajax({ url: dataConfiguration }).
+                    done(function (data) {
+
+                        loadAndMerge(template, data, $container);
+
+                    });
+
+            } else {
+                // It is an Array, so we already have data
+                loadAndMerge(template, dataConfiguration, $container);
+            }
+        }
+        else{
+
+            // No data has to be merged, but we let the next funciton to deal with it
+            loadAndMerge(template, null, $container);
+
         }
     },
 
@@ -41,7 +50,13 @@ hydrogen.data = (function () {
 
     merge = function(template, data, $container){
 
-        var dataTemplated = Mustache.render(template, data);
+        var dataTemplated = template;
+
+        if(data){
+
+            // There is data, it has to be merged
+            dataTemplated = Mustache.render(template, data);
+        }
 
         // Surround the template with DIV to allow methods to find thing inside
         var $styledTemplate = hydrogen.styles.applyStyles($("<div>" + dataTemplated + "</div>"));

@@ -205,16 +205,7 @@ hydrogen.routes = (function () {
                     $container = $("#" + updateConfiguration.container),
                     dataSource = updateConfiguration.data;
 
-                if(dataSource){
-
-                    hydrogen.data.load(dataSource, templateUrl, $container);
-
-                }
-                else{
-
-                    $container.load(templateUrl);
-
-                }
+                hydrogen.data.load(dataSource, templateUrl, $container);
             }
 
         };
