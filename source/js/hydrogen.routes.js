@@ -100,6 +100,26 @@ hydrogen.routes = (function () {
         },
 
         /**
+         * Returns current location of the application
+         *
+         * @method current
+         * @return {String} The URL for the last navigation
+         */
+        current = function(){
+
+            if(history.length > 0){
+
+                return history[history.length - 1];
+
+            } else{
+
+                return "";
+
+            }
+
+        },
+
+        /**
          * Redirects the aplication to a new route, as configured in the routeTable
          *
          * @method navigateTo
@@ -107,6 +127,10 @@ hydrogen.routes = (function () {
          * @chainable
          */
         navigateTo = function (url) {
+
+            history = history || [];
+
+            history.push(url);
 
             beforeNavigationCallback();
 
@@ -136,9 +160,6 @@ hydrogen.routes = (function () {
                         _updateArea(this, route.update);
 
                     }
-
-                    // Navigation succeded: store change in history
-                    history.push(url);
 
                     break;
                 }
@@ -187,6 +208,8 @@ hydrogen.routes = (function () {
         before: before,
 
         after: after,
+
+        current: current,
 
         templateBasePath: templateBasePath,
 

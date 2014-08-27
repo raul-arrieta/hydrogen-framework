@@ -17,6 +17,17 @@ var app = (function(){
 
             console.log("Navigation done");
 
+            console.log("I am at " + hydrogen.routes.current());
+
+            if(hydrogen.routes.current() === "/users"){
+
+                $("#liUsers").css({background: "#FF0F0F"});
+
+            }else{
+
+                $("#liUsers").css({background: "#FFF"});
+            }
+
         }).
 
         add({
