@@ -21,7 +21,7 @@ module.exports = function(grunt) {
             }
         },
         copy: {
-            source: { expand: true, cwd: "source/js", src: ["**/*.js"], dest: "demo/lib/js" },
+            source: { expand: true, cwd: "dist", src: ["**/*.min.js"], dest: "demo/lib/js" },
             jquery: { expand: true, cwd: "bower_components/jquery/dist", src: ["*.min.js"], dest: "demo/lib/js" },
             mustache: { expand: true, cwd: "bower_components/mustache", src: ["*.min.js"], dest: "demo/lib/js" },
             bootstrap_js: { expand: true, cwd: "bower_components/bootstrap/dist/js", src: ["*.min.js"], dest: "demo/lib/js" },
@@ -30,15 +30,19 @@ module.exports = function(grunt) {
         },
         concat: {
             options: { separator: ";" },
-            dist: { src: ["source/js/hydrogen*.js"], dest: "dist/hydrogen.min.js" }
+            dist: { src: [
+                "source/js/hydrogen.source.http.js",
+                "source/js/hydrogen.source.local.js",
+                "source/js/hydrogen.partialView.js",
+                "source/js/hydrogen.area.js",
+                "source/js/hydrogen.js"
+            ], dest: "dist/hydrogen.min.js" }
         },
         jshint: {
             source: {
                 // Validate source code against the jshintrc file"s rules
                 src: [
-                    "source/**/*.js",
-                    "Gruntfile.js",
-                    "package.json"
+                    "source/**/*.js"
                 ],
                 options: {
                     jshintrc: true
@@ -88,6 +92,7 @@ module.exports = function(grunt) {
     grunt.registerTask("default", [
         "jshint",
         "clean:demo",
+        "concat:dist",
         "copy",
         "http-server:dev",
         "watch:source"

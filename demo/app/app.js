@@ -1,2 +1,2 @@
-var app = new HydrogenApplication();
+var BlogApp = new HydrogenApplication();
 
