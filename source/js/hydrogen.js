@@ -1,39 +1,51 @@
-var hydrogen = (function(){
+/*exported HydrogenApplication, HydrogenArea */
 
-    var init = function(){
+/**
+ * This represents an area inside an Hydrogen based application.
+ *
+ * You can distribute code in areas. Remember all areas in the same share most functionality.
+ *
+ * @class HydrogenArea
+ * @param {String} name Name for the area
+ * @param {Object} configuration Area's configuration
+ * @constructor
+ */
+var HydrogenArea = function(name, configuration){
 
-        $("a[data-control='link']").each(function(index, item){
+    this.name = name;
+    this.configuration = configuration;
+};
 
-            if($(item).attr("data-action") === "back"){
+/**
+ * This represents an Hydrogen based application.
+ *
+ * You can have as many as you wish, as you remember that features are not shared among them.
+ *
+ * @class HydrogenApplication
+ * @uses HydrogenArea
+ * @constructor
+ */
+var HydrogenApplication = function(){
 
-                // Goes back one position in history
-                $(item).bind("click", function(){
+    var
+        _areas;
 
-                    hydrogen.routes.back();
+    /**
+     * Adds an area to the application.
+     *
+     * Areas allow code to be better organized and easier to maintain.
+     *
+     * @method Area
+     * @param {String} name Name for the area
+     * @param {Object} configuration Area's configuration
+     * @return {Object} Returns an HydrogenArea object
+     */
+    this.Area = function(name, configuration){
 
-                });
-            }
-            else{
-                $(item).bind("click", function(){
+        var new_area = new HydrogenArea(name, configuration);
 
-                    hydrogen.routes.navigateTo($(item).attr("data-url"));
+        _areas = _areas || [];
 
-                });
-            }
-
-        });
-
-        hydrogen.styles.applyStyles();
-
+        _areas.push(new_area);
     };
-
-
-    return {
-        init: init
-    };
-
-})();
-
-$(function(){
-    hydrogen.init();
-});
+};

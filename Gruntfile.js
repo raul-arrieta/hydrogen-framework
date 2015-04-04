@@ -23,24 +23,14 @@ module.exports = function(grunt) {
         copy: {
             source: { expand: true, cwd: "source/js", src: ["**/*.js"], dest: "demo/lib/js" },
             jquery: { expand: true, cwd: "bower_components/jquery/dist", src: ["*.min.js"], dest: "demo/lib/js" },
-            mustache: { expand: true, cwd: "bower_components/mustache", src: ["*.js"], dest: "demo/lib/js" }
+            mustache: { expand: true, cwd: "bower_components/mustache", src: ["*.min.js"], dest: "demo/lib/js" },
+            bootstrap_js: { expand: true, cwd: "bower_components/bootstrap/dist/js", src: ["*.min.js"], dest: "demo/lib/js" },
+            bootstrap_css: { expand: true, cwd: "bower_components/bootstrap/dist/css", src: ["*.min.css"], dest: "demo/lib/css" },
+            bootstrap_fonts: { expand: true, cwd: "bower_components/bootstrap/dist/fonts", src: ["*.*"], dest: "demo/lib/fonts" }
         },
         concat: {
             options: { separator: ";" },
-            dist: { src: ["source/js/hydrogen*.js"], dest: "dist/hydrogen.min.js" },
-        },
-        less: {
-            source: {
-                options: { compress: true, yuicompress: true, optimization: 2 },
-                files: {
-                    // Take the file hydrogen.less and compile it into hydrogen.min.css
-                    "demo/lib/css/hydrogen.min.css": "source/styles/hydrogen.less"
-                }
-            },
-            dist: {
-                options: { compress: true, yuicompress: true, optimization: 2 },
-                files: { "dist/hydrogen.min.css": "source/styles/hydrogen.less" }
-            }
+            dist: { src: ["source/js/hydrogen*.js"], dest: "dist/hydrogen.min.js" }
         },
         jshint: {
             source: {
@@ -58,11 +48,11 @@ module.exports = function(grunt) {
         watch: {
             source: {
                 files: ["source/**/*.*"],
-                tasks: ["jshint", "clean:demo", "copy:source", "copy:jquery", "copy:mustache", "less:source"],
+                tasks: ["jshint", "clean:demo", "copy"],
                 options: {
-                    spawn: false,
-                },
-            },
+                    spawn: false
+                }
+            }
         },
         "http-server": {
             dev: {
@@ -87,7 +77,6 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks("grunt-http-server");
     grunt.loadNpmTasks("grunt-contrib-copy");
-    grunt.loadNpmTasks("grunt-contrib-less");
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-contrib-watch");
@@ -99,10 +88,7 @@ module.exports = function(grunt) {
     grunt.registerTask("default", [
         "jshint",
         "clean:demo",
-        "copy:source",
-        "copy:jquery",
-        "copy:mustache",
-        "less:source",
+        "copy",
         "http-server:dev",
         "watch:source"
     ]);
@@ -111,7 +97,6 @@ module.exports = function(grunt) {
         "jshint",
         "clean:dist",
         "concat:dist",
-        "less:dist",
         "yuidoc"
     ]);
 
