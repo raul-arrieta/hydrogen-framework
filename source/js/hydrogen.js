@@ -1,5 +1,5 @@
 /*exported HydrogenApplication */
-/*global HydrogenHttpSourceManager, HydrogenLocalSourceManager, HydrogenPartialViewsManager, HydrogenArea, HydrogenPageManager */
+/*global HydrogenHttpSourceManager, HydrogenLocalSourceManager, HydrogenPartialViewsManager, HydrogenArea, HydrogenPageManager, HydrogenNavigation */
 
 /**
  * This represents an Hydrogen based application.
@@ -16,7 +16,8 @@ var HydrogenApplication = function(name, configuration){
     this.configuration = configuration;
 
     var
-        _areas;
+        _areas,
+        _navigation;
 
     // Configure HTTP resource manager
     this._httpSourceManager = new HydrogenHttpSourceManager();
@@ -33,6 +34,17 @@ var HydrogenApplication = function(name, configuration){
     // Configure partial views manager
     this._pageManager = new HydrogenPageManager();
     this.Page = this._pageManager.Page;
+
+    this.Navigation = function(routes){
+
+        _navigation = new HydrogenNavigation(routes);
+
+        // Subscribe to changes in the hash navigation, so we can navigate
+        $(window).on('hashchange', function() {
+
+            _navigation.navigateToUrl(window.location.hash);
+        });
+    };
 
     /**
      * Adds an area to the application.

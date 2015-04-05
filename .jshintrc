@@ -16,5 +16,5 @@
     "debug": true,
     "multistr": true,
 
-    "predef": ["it", "before", "after", "describe", "$"]
+    "predef": ["$", "window", "alert"]
 }

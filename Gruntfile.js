@@ -34,6 +34,7 @@ module.exports = function(grunt) {
                 "source/js/hydrogen.source.http.js",
                 "source/js/hydrogen.source.local.js",
                 "source/js/hydrogen.partialView.js",
+                "source/js/hydrogen.navigation.js",
                 "source/js/hydrogen.page.js",
                 "source/js/hydrogen.area.js",
                 "source/js/hydrogen.js"

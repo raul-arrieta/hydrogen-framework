@@ -10,7 +10,7 @@ var HydrogenPage = function(name, partials){
     this.load = function(){
 
         for (
-            var partialCounter = 0,partialTotal = page.partials.length;
+            var partialCounter = 0, partialTotal = page.partials.length;
             partialCounter < partialTotal;
             partialCounter++){
 
@@ -20,7 +20,6 @@ var HydrogenPage = function(name, partials){
 
             partial.render(destination);
         }
-
     };
 };
 

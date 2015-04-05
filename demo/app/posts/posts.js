@@ -33,6 +33,7 @@ var latestPostsPartial = postsArea.Partial(postsArea, 'latestPosts', {
 });
 
 var homePage = postsArea.Page('home',[
-    { destination: '#post-list', partial: latestPostsPartial},
-    { destination: '#menu', partial: menuPartial}
+    { destination: '#main', partial: latestPostsPartial },
+    { destination: '#menu', partial: menuPartial },
+    { destination: '#users-with-post', partial: usersWithPostPartial }
 ]);

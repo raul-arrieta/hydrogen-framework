@@ -25,7 +25,8 @@ var HydrogenHttpSource = function(parent, name, configuration){
     this.parent = parent;
 
     // Configure defaults
-    this.configuration = this.configuration || 'GET';
+    this.configuration = this.configuration || {};
+    this.configuration.method = this.configuration.method || 'GET';
     this.configuration.on = this.configuration.on || {};
 
     this.fetch = function(callback){
