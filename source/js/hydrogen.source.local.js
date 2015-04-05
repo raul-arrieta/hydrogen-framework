@@ -1,5 +1,11 @@
 /*exported HydrogenLocalSourceManager, HydrogenHttpSource */
 
+/**
+ * This represents the manager for local resources
+ *
+ * @class HydrogenLocalSourceManager
+ * @constructor
+ */
 var HydrogenLocalSourceManager = function(){
 
     var resourceManager = this;
@@ -16,6 +22,17 @@ var HydrogenLocalSourceManager = function(){
     };
 };
 
+/**
+ * This represents a local resource. A local resource is a resource that returns data based on static data (arrays,
+ * objects,...) or based on the execution of a function that does not require callback.
+ *
+ * You can distribute the code in your application through areas.
+ *
+ * @class HydrogenLocalSource
+ * @param {String} name Name for the source
+ * @param {Object} configuration Source's configuration
+ * @constructor
+ */
 var HydrogenLocalSource = function(name, configuration){
 
     var localSource = this;

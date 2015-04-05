@@ -22,14 +22,6 @@ var latestPostsSource = postsArea.HttpSource(postsArea, 'latestPosts', {
     cache: false
 });
 
-var menuSource = postsArea.LocalSource('menu', {
-    options: [
-        { name: 'About us'},
-        { name: 'Contact'},
-        { name: 'The project'}
-    ]
-});
-
 var latestPostsPartial = postsArea.Partial(postsArea, 'latestPosts', {
 
     templateName: 'list',
@@ -40,14 +32,7 @@ var latestPostsPartial = postsArea.Partial(postsArea, 'latestPosts', {
     }
 });
 
-var menuPartial = postsArea.Partial(postsArea, 'menu', {
-
-    templateName: 'menu',
-    source: menuSource
-});
-
-$(function(){
-
-    latestPostsPartial.render('#post-list');
-    menuPartial.render('#menu');
-});
+var homePage = postsArea.Page('home',[
+    { destination: '#post-list', partial: latestPostsPartial},
+    { destination: '#menu', partial: menuPartial}
+]);

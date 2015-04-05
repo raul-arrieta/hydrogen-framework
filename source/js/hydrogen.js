@@ -1,5 +1,5 @@
 /*exported HydrogenApplication */
-/*global HydrogenHttpSourceManager, HydrogenPartialViewsManager, HydrogenArea */
+/*global HydrogenHttpSourceManager, HydrogenLocalSourceManager, HydrogenPartialViewsManager, HydrogenArea, HydrogenPageManager */
 
 /**
  * This represents an Hydrogen based application.
@@ -10,7 +10,10 @@
  * @uses HydrogenArea
  * @constructor
  */
-var HydrogenApplication = function(){
+var HydrogenApplication = function(name, configuration){
+
+    this.name = name;
+    this.configuration = configuration;
 
     var
         _areas;
@@ -19,9 +22,17 @@ var HydrogenApplication = function(){
     this._httpSourceManager = new HydrogenHttpSourceManager();
     this.HttpSource = this._httpSourceManager.HttpSource;
 
+    // Configure local resource manager
+    this._localSourceManager = new HydrogenLocalSourceManager();
+    this.LocalSource = this._localSourceManager.LocalSource;
+
     // Configure partial views manager
     this._partialViewsManager = new HydrogenPartialViewsManager();
     this.Partial = this._partialViewsManager.Partial;
+
+    // Configure partial views manager
+    this._pageManager = new HydrogenPageManager();
+    this.Page = this._pageManager.Page;
 
     /**
      * Adds an area to the application.

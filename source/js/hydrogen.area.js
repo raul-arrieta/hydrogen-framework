@@ -1,10 +1,10 @@
 /*exported HydrogenArea */
-/*global HydrogenHttpSourceManager, HydrogenPartialViewsManager, HydrogenLocalSourceManager */
+/*global HydrogenHttpSourceManager, HydrogenPartialViewsManager, HydrogenLocalSourceManager, HydrogenPageManager */
 
 /**
  * This represents an area inside an Hydrogen based application.
  *
- * You can distribute code in areas. Remember all areas in the same share most functionality.
+ * You can distribute the code in your application through areas.
  *
  * @class HydrogenArea
  * @param {String} name Name for the area
@@ -27,4 +27,8 @@ var HydrogenArea = function(name, configuration){
     // Configure partial views manager
     this._partialViewsManager = new HydrogenPartialViewsManager();
     this.Partial = this._partialViewsManager.Partial;
+
+    // Configure partial views manager
+    this._pageManager = new HydrogenPageManager();
+    this.Page = this._pageManager.Page;
 };

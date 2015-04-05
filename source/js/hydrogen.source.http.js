@@ -39,29 +39,30 @@ var HydrogenHttpSource = function(parent, name, configuration){
             source.configuration.on.before(source.configuration.params);
         }
 
-        $.ajax({
+        var ajaxCall = $.ajax({
             method: source.configuration.method,
             url: urlFetch,
             data: source.configuration.params
-        })
-            .done(function(result) {
+        });
 
-                // If there is a function to apply after fetching data, we execute it here
-                if(source.configuration.on.after){
+        ajaxCall.done(function(result) {
 
-                    console.log(source.configuration.on.after(result));
+            // If there is a function to apply after fetching data, we execute it here
+            if(source.configuration.on.after){
 
-                    // Continue execution
-                    callback(source.configuration.on.after(result));
-                }
-                else {
-                    // Continue execution
-                    callback(result);
-                }
-            })
-            .error(function(error){
+                // Continue execution
+                callback(source.configuration.on.after(result));
+            }
+            else {
 
-                console.error(error);
-            });
+                // Continue execution
+                callback(result);
+            }
+        });
+
+        ajaxCall.error(function(error){
+
+            console.error(error);
+        });
     };
 };
