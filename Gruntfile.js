@@ -22,7 +22,7 @@ module.exports = function(grunt) {
         },
         copy: {
             source: { expand: true, cwd: "dist", src: ["**/*.min.js"], dest: "demo/lib/js" },
-            jquery: { expand: true, cwd: "bower_components/jquery/dist", src: ["*.min.js"], dest: "demo/lib/js" },
+            jquery: { expand: true, cwd: "bower_components/jquery/dist", src: ["*.min.js", "*.min.map"], dest: "demo/lib/js" },
             mustache: { expand: true, cwd: "bower_components/mustache", src: ["*.min.js"], dest: "demo/lib/js" },
             bootstrap_js: { expand: true, cwd: "bower_components/bootstrap/dist/js", src: ["*.min.js"], dest: "demo/lib/js" },
             bootstrap_css: { expand: true, cwd: "bower_components/bootstrap/dist/css", src: ["*.min.css"], dest: "demo/lib/css" },
