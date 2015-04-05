@@ -1,7 +1,8 @@
 # Hydrogen Framework: users' guide
 ==================================
 
-*If you're looking for the **developers' version** of the README file, please refer to (README_developers.md) file
+*If you're looking for the* **developers' version** *of the README file, please refer to 
+[README for developers](README_developers.md) file*
 
 ## Introduction
 
