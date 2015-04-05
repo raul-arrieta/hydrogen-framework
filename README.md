@@ -30,7 +30,28 @@ explained until here apply also to areas, but take this into account: if you *li
 a single area, it will be accessible only to other resources, pages, partial views... in that area. Instead, defining
 resources, pages, partial views,... to the **Application** level, make them accessible through all areas. You should 
 find the equilibrium between the two scenarios.
+
+## DISCLOSURE
+
+This framework is a tool for helping developers. The developer that will get helped most is me, as I am learning a lot
+about javascript and web development through this project. If it also helps anyone else and allows you to get one single
+minute of spare time to enjoy your family and friends, I get absolute compensation.
+
+It is, undoubtedly, not perfect. Use it under your responsibility, and get sure it meets your needs before ever 
+starting to develop.
+
+I wouldn't use it in a production environment, but... who am I to tell you what to do?
     
+## THANKS   
+
+First, thanks a lot to you, for being interested in this project.
+
+Thanks a lot to [jQuery](https://jquery.com/) developers (all of them). Without you, the web today would not be as 
+powerful as it is.
+
+Thanks a lot to [Mustache](https://mustache.github.io/) developers. This framework would have required much more work 
+to be developed without your work. Reinventing the wheel is not a good pattern, after all.
+  
 ## Usage
 
 ### Required dependencies 
@@ -40,3 +61,16 @@ can add those dependencies with **bower**:
 
     bower install jquery
     bower install mustache
+    
+### Use guide
+
+First, you should create your **Hydrogen** application, indicating some information about where should it look for
+templates, their extension and the base url for building API based calls.
+
+    var BlogApp = new HydrogenApplication('BlogApp',{
+    
+        templatePath: 'app/templates',
+        templateExtension: 'html',
+        httpSourceBase: 'http://jsonplaceholder.typicode.com'
+    });
+    
