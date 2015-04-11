@@ -151,6 +151,7 @@ var HydrogenHttpRestFullSource = function(parent, name, configuration){
     generateHandler(this,'update');
     generateHandler(this,'remove');
 
+    // HydrogenPartialView render method uses "fetch" -> redirect to "read" 
     this.fetch = function(callback) {
         this.read(callback);
     };
