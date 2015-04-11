@@ -2,7 +2,7 @@
 
 var HydrogenHttpSourceTypes = {
     HttpSource : 'http',
-    HttpRestFullSource : 'restfull'
+    HttpRestFulSource : 'restful'
 };
 
 var HydrogenHttpSourceManager = function(){
@@ -15,8 +15,8 @@ var HydrogenHttpSourceManager = function(){
         var source;
         if (configuration){
             switch (configuration.sourcetype) {
-                case HydrogenHttpSourceTypes.HttpRestFullSource:
-                    source = new HydrogenHttpRestFullSource(parent, name, configuration);
+                case HydrogenHttpSourceTypes.HttpRestFulSource:
+                    source = new HydrogenHttpRestFulSource(parent, name, configuration);
                     break;
                 default:
                     source = new HydrogenHttpSource(parent, name, configuration);
@@ -86,7 +86,23 @@ var HydrogenHttpSource = function(parent, name, configuration){
     };
 };
 
-var HydrogenHttpRestFullSource = function(parent, name, configuration){
+/**
+ * This represents a http restful resource. 
+ * A http restful resource is a resource that enables consuming a REST API following CRUD mapping:
+ *      Create -> Post
+ *      Read   -> Get
+ *      Update -> Put
+ *      Delete -> Delete
+ *
+ * You link http restful resources to as many partial views as you wish.
+ *
+ * @class HydrogenHttpRestFulSource
+ * @param {HydrogenApplication} Http restful resource's parent 
+ * @param {String} name Name for the source
+ * @param {Object} configuration Source's configuration
+ * @constructor
+ */
+var HydrogenHttpRestFulSource = function(parent, name, configuration){
 
     var httpSource = this;
 
@@ -94,7 +110,7 @@ var HydrogenHttpRestFullSource = function(parent, name, configuration){
     this.configuration = configuration;
     this.parent = parent;
 
-    this.sourcetype = HydrogenHttpSourceTypes.HttpRestFullSource,
+    this.sourcetype = HydrogenHttpSourceTypes.HttpRestFulSource,
     
     // Configure defaults
     this.configuration = this.configuration || {};
@@ -155,10 +171,5 @@ var HydrogenHttpRestFullSource = function(parent, name, configuration){
     this.fetch = function(callback) {
         this.read(callback);
     };
-
-
-
-
-
 };
 
