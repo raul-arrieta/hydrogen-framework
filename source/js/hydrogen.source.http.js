@@ -1,29 +1,8 @@
 /*exported HydrogenHttpSourceManager, HydrogenHttpSource */
 
-
 var HydrogenHttpSourceTypes = {
     HttpSource : 'http',
     HttpRestFullSource : 'restfull'
-};
-
-var HydrogenHttpRestFullSource_EmptyOptions = {
-    url: '',
-    read: { //read
-        method: 'GET',
-        params: null,
-    },
-    create: { //create
-        method: 'POST',
-        params: null,
-    },
-    update: { //update
-        method: 'PUT',
-        params: null,
-    },
-    remove: { //delete
-        method: 'DELETE',
-        params: null,
-    }
 };
 
 var HydrogenHttpSourceManager = function(){
@@ -118,171 +97,59 @@ var HydrogenHttpRestFullSource = function(parent, name, configuration){
     this.sourcetype = HydrogenHttpSourceTypes.HttpRestFullSource,
     
     // Configure defaults
-    this.configuration = this.configuration || HydrogenHttpRestFullSource_EmptyOptions;
+    this.configuration = this.configuration || {};
 
-    if (this.configuration.read)
-    {
-        this.configuration.read.on   = this.configuration.read.on || {};
+    // Generate each handler
+    var generateHandler = function(that,op) {
+        if (that.configuration[op])
+        {
+            that.configuration[op].on   = that.configuration[op].on || {};
 
-        this.read = function(callback) {
-            var source = this;
-            var urlFetch = httpSource.parent.configuration.httpSourceBase + source.configuration.url;
-            var _params = source.configuration.read.params;
-            // If there is a function to apply before fetching data, we execute it here
-            if(source.configuration.read.on.before){
-                source.configuration.read.on.before(_params);
-            }
-
-            var ajaxCall = $.ajax({
-                method: source.configuration.read.method,
-                url: urlFetch,
-                data: _params
-            });
-
-            ajaxCall.done(function(result) {
-                // If there is a function to apply after fetching data, we execute it here
-                if(source.configuration.read.on.after){
-                    // Continue execution
-                    callback(source.configuration.read.on.after(result));
+            that[op] = function(callback) {
+                var source = that;
+                var urlFetch = httpSource.parent.configuration.httpSourceBase + source.configuration.url;
+                var _params = source.configuration[op].params;
+                // If there is a function to apply before fetching data, we execute it here
+                if(source.configuration[op].on.before){
+                    source.configuration[op].on.before(_params);
                 }
-                else {
-                    // Continue execution
-                    callback(result);
-                }
-            });
 
-            ajaxCall.error(function(error){
-                //Error
-                console.error(error);
-            });
-        };
-    } else {
-        this.configuration.read = {};
-        this.configuration.read.on = {};
-        this.read = function(callback) { 
-            callback();
-        };
-    }
+                var ajaxCall = $.ajax({
+                    method: source.configuration[op].method,
+                    url: urlFetch,
+                    data: _params
+                });
 
-    if (this.configuration.create)
-    {
-        this.configuration.create.on = this.configuration.create.on || {};    
+                ajaxCall.done(function(result) {
+                    // If there is a function to apply after fetching data, we execute it here
+                    if(source.configuration[op].on.after){
+                        // Continue execution
+                        callback(source.configuration[op].on.after(result));
+                    }
+                    else {
+                        // Continue execution
+                        callback(result);
+                    }
+                });
 
-        this.create = function(callback) {
-            var source = this;
-            var urlFetch = httpSource.parent.configuration.httpSourceBase + source.configuration.url;
-            var _params = source.configuration.create.params;
-            // If there is a function to apply before fetching data, we execute it here
-            if(source.configuration.create.on.before){
-                source.configuration.create.on.before(_params);
-            }
+                ajaxCall.error(function(error){
+                    //Error
+                    console.error(error);
+                });
+            };
+        } else {
+            that.configuration[op] = {};
+            that.configuration[op].on = {};
+            that[op] = function(callback) { 
+                callback();
+            };
+        }
+    };
 
-            var ajaxCall = $.ajax({
-                method: source.configuration.create.method,
-                url: urlFetch,
-                data: _params
-            });
-
-            ajaxCall.done(function(result) {
-                // If there is a function to apply after fetching data, we execute it here
-                if(source.configuration.create.on.after){
-                    // Continue execution
-                    callback(source.configuration.create.on.after(result));
-                }
-                else {
-                    // Continue execution
-                    callback(result);
-                }
-            });
-
-            ajaxCall.error(function(error){
-                //Error
-                console.error(error);
-            });
-        };
-    } else {
-        this.create = function(callback) { 
-            callback(); 
-        };
-    }
-    
-    if (this.configuration.update) {
-        this.configuration.update.on = this.configuration.update.on || {};
-
-        this.update = function(callback) {
-            var source = this;
-            var urlFetch = httpSource.parent.configuration.httpSourceBase + source.configuration.url;
-            var _params = source.configuration.update.params;
-            // If there is a function to apply before fetching data, we execute it here
-            if(source.configuration.update.on.before){
-                source.configuration.update.on.before(_params);
-            }
-
-            var ajaxCall = $.ajax({
-                method: source.configuration.update.method,
-                url: urlFetch,
-                data: _params
-            });
-
-            ajaxCall.done(function(result) {
-                // If there is a function to apply after fetching data, we execute it here
-                if(source.configuration.update.on.after){
-                    // Continue execution
-                    callback(source.configuration.update.on.after(result));
-                }
-                else {
-                    // Continue execution
-                    callback(result);
-                }
-            });
-
-            ajaxCall.error(function(error){
-                //Error
-                console.error(error);
-            });
-        };
-    }
-
-    if (this.configuration.remove){
-        this.configuration.remove.on = this.configuration.remove.on || {};
-        this.remove = function(callback) {
-            var source = this;
-            var urlFetch = httpSource.parent.configuration.httpSourceBase + source.configuration.url;
-            var _params = source.configuration.remove.params;
-            // If there is a function to apply before fetching data, we execute it here
-            if(source.configuration.remove.on.before){
-                source.configuration.remove.on.before(_params);
-            }
-
-            var ajaxCall = $.ajax({
-                method: source.configuration.remove.method,
-                url: urlFetch,
-                data: _params
-            });
-
-            ajaxCall.done(function(result) {
-                // If there is a function to apply after fetching data, we execute it here
-                if(source.configuration.remove.on.after){
-                    // Continue execution
-                    callback(source.configuration.remove.on.after(result));
-                }
-                else {
-                    // Continue execution
-                    callback(result);
-                }
-            });
-
-            ajaxCall.error(function(error){
-                //Error
-                console.error(error);
-            });
-        };
-    } else {
-        this.remove = function (callback) {
-            callback();
-        };
-    }
-
+    generateHandler(this,'read');
+    generateHandler(this,'create');
+    generateHandler(this,'update');
+    generateHandler(this,'remove');
 
     this.fetch = function(callback) {
         this.read(callback);
