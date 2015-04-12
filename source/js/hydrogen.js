@@ -22,7 +22,6 @@ var HydrogenApplication = function(name, configuration){
     // Configure HTTP resource manager
     this._httpSourceManager = new HydrogenHttpSourceManager();
     this.HttpSource = this._httpSourceManager.HttpSource;
-    this.HttpRestFullResource = this._httpSourceManager.HttpRestFullResource;
 
     // Configure local resource manager
     this._localSourceManager = new HydrogenLocalSourceManager();

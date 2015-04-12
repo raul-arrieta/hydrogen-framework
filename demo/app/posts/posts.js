@@ -6,7 +6,7 @@ var postsArea = BlogApp.Area('post',{
 });
 
 var latestPostsSource = postsArea.HttpSource(postsArea, 'latestPosts', {
-    sourcetype:  'restfull',
+    sourcetype:  'restful',
     url: '/posts',
     read: { //read
         method: 'GET',

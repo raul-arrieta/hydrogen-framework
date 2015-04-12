@@ -6,7 +6,7 @@ var BlogApp = new HydrogenApplication('BlogApp',{
 });
 
 var allUsersSource = BlogApp.HttpSource(BlogApp, 'allUsers', {
-    sourcetype:  'restfull',
+    sourcetype:  'restful',
     url: '/users',
     read: { //read
         method: 'GET',

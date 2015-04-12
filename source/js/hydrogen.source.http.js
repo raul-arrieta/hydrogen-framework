@@ -1,4 +1,4 @@
-/*exported HydrogenHttpSourceManager, HydrogenHttpSource */
+/* exported HydrogenHttpSourceManager, HydrogenHttpSource */
 
 var HydrogenHttpSourceTypes = {
     HttpSource : 'http',
@@ -97,7 +97,7 @@ var HydrogenHttpSource = function(parent, name, configuration){
  * You link http restful resources to as many partial views as you wish.
  *
  * @class HydrogenHttpRestFulSource
- * @param {HydrogenApplication} Http restful resource's parent 
+ * @param {Object} Http restful resource's parent (HydrogenApplication or HydrogenArea)
  * @param {String} name Name for the source
  * @param {Object} configuration Source's configuration
  * @constructor
@@ -110,8 +110,8 @@ var HydrogenHttpRestFulSource = function(parent, name, configuration){
     this.configuration = configuration;
     this.parent = parent;
 
-    this.sourcetype = HydrogenHttpSourceTypes.HttpRestFulSource,
-    
+    this.sourcetype = HydrogenHttpSourceTypes.HttpRestFulSource;
+
     // Configure defaults
     this.configuration = this.configuration || {};
 
@@ -121,10 +121,10 @@ var HydrogenHttpRestFulSource = function(parent, name, configuration){
         {
             that.configuration[op].on   = that.configuration[op].on || {};
 
-            that[op] = function(callback) {
+            that[op] = function(params, callback) {
                 var source = that;
                 var urlFetch = httpSource.parent.configuration.httpSourceBase + source.configuration.url;
-                var _params = source.configuration[op].params;
+                var _params = params;
                 // If there is a function to apply before fetching data, we execute it here
                 if(source.configuration[op].on.before){
                     source.configuration[op].on.before(_params);
@@ -156,7 +156,7 @@ var HydrogenHttpRestFulSource = function(parent, name, configuration){
         } else {
             that.configuration[op] = {};
             that.configuration[op].on = {};
-            that[op] = function(callback) { 
+            that[op] = function(params, callback) {
                 callback();
             };
         }
@@ -169,7 +169,6 @@ var HydrogenHttpRestFulSource = function(parent, name, configuration){
 
     // HydrogenPartialView render method uses "fetch" -> redirect to "read" 
     this.fetch = function(callback) {
-        this.read(callback);
+        this.read(this.configuration.read.params,callback);
     };
 };
-
