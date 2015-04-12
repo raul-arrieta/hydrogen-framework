@@ -122,4 +122,13 @@ module.exports = function(grunt) {
         "yuidoc"
     ]);
 
+    // Travis CI task.
+    grunt.registerTask('travis', [
+        "jshint",
+        "jasmine",
+        "clean:demo",
+        "concat:dist",
+        "copy",
+        "http-server:dev"
+    ]);
 };

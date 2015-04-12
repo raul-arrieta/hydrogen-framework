@@ -1,5 +1,5 @@
 # Hydrogen Framework: users' guide
-==================================
+
 [![Build Status](https://travis-ci.org/raul-arrieta/hydrogen-framework.svg?branch=master)](https://travis-ci.org/raul-arrieta/hydrogen-framework)
 
 *If you're looking for the* **developers' version** *of the README file, please refer to 
