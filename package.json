@@ -26,7 +26,6 @@
     "grunt-http-server": "1.2.0",
     "grunt-contrib-jasmine": "0.8.2",
     "grunt-contrib-jshint": "0.11.2",
-    "coveralls": "2.11.2",
     "passport-oauth": "^1.0.0"
   },
   "scripts": {
