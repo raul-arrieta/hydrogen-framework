@@ -1,6 +1,6 @@
 /*exported HydrogenApplication */
 /*global HydrogenHttpSourceManager, HydrogenLocalSourceManager, HydrogenPartialViewsManager, HydrogenArea, 
-    HydrogenPageManager, HydrogenNavigation, HydrogenAuthenticationManager */
+    HydrogenPageManager, HydrogenNavigation */
 
 /**
  * This represents an Hydrogen based application.
@@ -37,8 +37,8 @@ var HydrogenApplication = function(name, configuration){
     this.Page = this._pageManager.Page;
 
     // Configure authentication
-    this._authenticationManager = new HydrogenAuthenticationManager();
-    this.Authentication = this._authenticationManager.ensureAuthenticated;
+    //this._authenticationManager = new HydrogenAuthenticationManager();
+    //this.Authentication = this._authenticationManager.ensureAuthenticated;
 
     this.Navigation = function(routes){
 
