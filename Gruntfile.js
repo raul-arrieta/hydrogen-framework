@@ -21,40 +21,29 @@ module.exports = function(grunt) {
             }
         },
         jasmine : {
-          src : 'source/**/*.js',
-          options : {
-            specs : 'spec/**/*.js',
-            templateOptions: {
-                coverage: "reports/coverage.json",
-                template : require("grunt-template-jasmine-istanbul"),
-                report: [
-                    {
-                        type: "html",
-                        options: {
-                            dir: "reports/html"
-                        }
-                    },
-                    {
-                        type: "lcov",
-                        options: {
-                            dir: "reports/lcov"
-                        }
-                    },
-                ]
+            all: {
+                src : 'source/**/*.js',
+                options : {
+                    specs : 'spec/**/*.js',
+                    vendor: [
+                        "bower_components/jquery/dist/jquery.js"
+                    ]
+                }
             },
-            vendor: [
-                "bower_components/jquery/dist/jquery.js"
-            ]
-          }
-        },
-        coveralls: {
-            options: {
-                src: "reports/lcov/lcov.info",
-                // dont fail if coveralls fails
-                force: true
-            },
-            main_target: {
-                src: "reports/lcov/lcov.info"
+            istanbul: {
+                src: '<%= jasmine.all.src %>',
+                options: {
+                    vendor: '<%= jasmine.all.options.vendor %>',
+                    specs: '<%= jasmine.all.options.specs %>',
+                    template: require('grunt-template-jasmine-istanbul'),
+                    templateOptions: {
+                        coverage: 'coverage/json/coverage.json',
+                        report: [
+                            {type: 'html', options: {dir: 'coverage/html'}},
+                            {type: 'text-summary'}
+                        ]
+                    }
+                }
             }
         },
         copy: {
@@ -96,7 +85,8 @@ module.exports = function(grunt) {
                 options: {
                     spawn: false
                 }
-            }
+            },
+            tasks: ['jasmine']
         },
         "http-server": {
             dev: {
@@ -141,7 +131,7 @@ module.exports = function(grunt) {
         "watch:source"
     ]);
 
-    grunt.registerTask('test', ['jshint', 'jasmine']);
+    grunt.registerTask('test', ['jshint', 'jasmine:all']);
 
     grunt.registerTask("distrib", [
         "jshint",
@@ -153,8 +143,8 @@ module.exports = function(grunt) {
     // Travis CI task.
     grunt.registerTask('travis', [
         "jshint",
-        "jasmine",
-        "coveralls",
+        "jasmine:all",
+        "jasmine:istanbul",
         "clean:demo",
         "concat:dist",
         "copy",
