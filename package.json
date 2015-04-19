@@ -7,6 +7,12 @@
     "name"  : "Jesus Maria Escudero",
     "email" : "jm.escudero.justel@gmail.com"
   },
+  "contributors": [
+    {
+      "name": "Raul Arrieta Brouard",
+      "email": "raul.arrieta@gmail.com"
+    }
+  ],
   "repository" : {
     "type" : "git",
     "url"  : "git://github.com/jmescuderojustel/hydrogen-framework.git"

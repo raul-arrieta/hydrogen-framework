@@ -49,6 +49,7 @@ module.exports = function(grunt) {
         },
         coveralls: {
             options: {
+                src: "reports/lcov/lcov.info",
                 // dont fail if coveralls fails
                 force: true
             },
