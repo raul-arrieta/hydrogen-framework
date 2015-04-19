@@ -24,10 +24,36 @@ module.exports = function(grunt) {
           src : 'source/**/*.js',
           options : {
             specs : 'spec/**/*.js',
+            templateOptions: {
+                coverage: "reports/coverage.json",
+                report: [
+                    {
+                        type: "html",
+                        options: {
+                            dir: "reports/html"
+                        }
+                    },
+                    {
+                        type: "lcov",
+                        options: {
+                            dir: "reports/lcov"
+                        }
+                    },
+                ]
+            },
             vendor: [
                 "bower_components/jquery/dist/jquery.js"
             ]
           }
+        },
+        coveralls: {
+            options: {
+                // dont fail if coveralls fails
+                force: true
+            },
+            main_target: {
+                src: "reports/lcov/lcov.info"
+            }
         },
         copy: {
             source: { expand: true, cwd: "dist", src: ["**/*.min.js"], dest: "demo/lib/js" },
@@ -98,7 +124,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-contrib-concat");
     grunt.loadNpmTasks("grunt-contrib-yuidoc");
-
+    grunt.loadNpmTasks("grunt-coveralls");
     grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-jshint');
 
@@ -126,6 +152,7 @@ module.exports = function(grunt) {
     grunt.registerTask('travis', [
         "jshint",
         "jasmine",
+        "coveralls",
         "clean:demo",
         "concat:dist",
         "copy",
