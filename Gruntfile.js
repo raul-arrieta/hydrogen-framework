@@ -26,6 +26,7 @@ module.exports = function(grunt) {
             specs : 'spec/**/*.js',
             templateOptions: {
                 coverage: "reports/coverage.json",
+                template : require("grunt-template-jasmine-istanbul"),
                 report: [
                     {
                         type: "html",
