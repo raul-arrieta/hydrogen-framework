@@ -149,7 +149,7 @@ module.exports = function(grunt) {
         "jshint",
         "jasmine:all",
         "jasmine:istanbul",
-        "clean:demo",
+        //"clean:demo",
         "concat:dist",
         "copy",
         "http-server:dev"
