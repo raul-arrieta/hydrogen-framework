@@ -21,13 +21,34 @@ module.exports = function(grunt) {
             }
         },
         jasmine : {
-          src : 'source/**/*.js',
-          options : {
-            specs : 'spec/**/*.js',
-            vendor: [
-                "bower_components/jquery/dist/jquery.js"
-            ]
-          }
+            all: {
+                src : 'source/**/*.js',
+                options : {
+                    specs : 'spec/**/*.js',
+                    vendor: [
+                        "bower_components/jquery/dist/jquery.js"
+                    ]
+                }
+            },
+            istanbul: {
+                src: 'source/**/*.js',
+                options: {
+                    specs: 'spec/**/*.js',
+                    vendor: 'bower_components/jquery/dist/jquery.js',
+                    coverage: {},
+                    forceExit: true,
+                    match: '.',
+                    matchAll: false,
+                    extensions: 'js',
+                    captureExceptions: true,
+                    coverage: {
+                        print: 'detail'
+                    },
+                    isVerbose: true,
+                    showColors: true,
+                    //template: require('grunt-template-jasmine-istanbul')
+                }
+            }
         },
         copy: {
             source: { expand: true, cwd: "dist", src: ["**/*.min.js"], dest: "demo/lib/js" },
@@ -68,7 +89,8 @@ module.exports = function(grunt) {
                 options: {
                     spawn: false
                 }
-            }
+            },
+            tasks: ['jasmine']
         },
         "http-server": {
             dev: {
@@ -98,7 +120,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-contrib-concat");
     grunt.loadNpmTasks("grunt-contrib-yuidoc");
-
+    grunt.loadNpmTasks("grunt-coveralls");
     grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-jshint');
 
@@ -113,7 +135,7 @@ module.exports = function(grunt) {
         "watch:source"
     ]);
 
-    grunt.registerTask('test', ['jshint', 'jasmine']);
+    grunt.registerTask('test', ['jshint', 'jasmine:all']);
 
     grunt.registerTask("distrib", [
         "jshint",
@@ -125,8 +147,9 @@ module.exports = function(grunt) {
     // Travis CI task.
     grunt.registerTask('travis', [
         "jshint",
-        "jasmine",
-        "clean:demo",
+        "jasmine:all",
+        "jasmine:istanbul",
+        //"clean:demo",
         "concat:dist",
         "copy",
         "http-server:dev"
