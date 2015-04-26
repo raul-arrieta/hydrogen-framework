@@ -31,18 +31,22 @@ module.exports = function(grunt) {
                 }
             },
             istanbul: {
-                src: '<%= jasmine.all.src %>',
+                src: 'source/**/*.js',
                 options: {
-                    vendor: '<%= jasmine.all.options.vendor %>',
-                    specs: '<%= jasmine.all.options.specs %>',
-                    template: require('grunt-template-jasmine-istanbul'),
-                    templateOptions: {
-                        coverage: 'coverage/json/coverage.json',
-                        report: [
-                            {type: 'html', options: {dir: 'coverage/html'}},
-                            {type: 'text-summary'}
-                        ]
-                    }
+                    specs: 'spec/**/*.js',
+                    vendor: 'bower_components/jquery/dist/jquery.js',
+                    coverage: {},
+                    forceExit: true,
+                    match: '.',
+                    matchAll: false,
+                    extensions: 'js',
+                    captureExceptions: true,
+                    coverage: {
+                        print: 'detail'
+                    },
+                    isVerbose: true,
+                    showColors: true,
+                    //template: require('grunt-template-jasmine-istanbul')
                 }
             }
         },
